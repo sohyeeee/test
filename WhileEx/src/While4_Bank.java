@@ -10,7 +10,8 @@ public class While4_Bank {
 			System.out.println("----------------------------");
 			System.out.println("1.예금 | 2.출금 | 3.잔고 | 4.종료");
 			System.out.println("----------------------------");
-			System.out.print("선택> ");
+			
+//			System.out.print("선택> ");
 			int select = scanner.nextInt();
 
 			switch(select) {
