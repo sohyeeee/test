@@ -1,6 +1,7 @@
 package com.ll.exam.sbb;
 
 import ch.qos.logback.core.net.SyslogOutputStream;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -135,4 +136,21 @@ public class MainController {
 
         return "세션변수 %s의 값이 %s입니다.".formatted(name, value);
     }
+
+    @GetMapping("/addArticle")
+    @ResponseBody
+    public String addArticle(String title, String body){
+        int id = 1;
+       Article article = new Article(id,title, body);
+
+       return "%d번 게시물이 생성되었습니다.".formatted(id);
+    }
+}
+
+@AllArgsConstructor
+class Article {
+    private final int id;
+    private final String title;
+    private final String body;
+
 }
