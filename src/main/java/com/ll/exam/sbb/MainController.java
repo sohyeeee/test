@@ -4,6 +4,9 @@ import ch.qos.logback.core.net.SyslogOutputStream;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 @Controller
 public class MainController {
     private int increaseNo = -1;
@@ -62,6 +65,24 @@ public class MainController {
     public int showIncrease(){
         increaseNo++;
         return increaseNo;
+    }
+
+    @GetMapping("/Gugudan")
+    @ResponseBody
+    public String showGugudan(Integer dan, Integer limit){ //Integer는 값없어도 null들어감.int는 null불가능4
+        if(limit==null){
+            limit = 9;
+        }
+        if(dan==null){
+            dan = 9;
+        }
+
+        Integer finalDan = dan; //스트림안에서는 불변
+        return IntStream.rangeClosed(1, limit)
+                .mapToObj(i -> "%d * %d = %d".formatted(finalDan, i, finalDan*i))
+                .collect(Collectors.joining("<br>\n"));
+
+
     }
 
 }
