@@ -4,6 +4,9 @@ import ch.qos.logback.core.net.SyslogOutputStream;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -53,6 +56,15 @@ public class MainController {
         return a+b;
     }
 
+    @GetMapping("/plus2") //스프링부트의 좋은점. 원래는 이렇게 해야됨.
+    @ResponseBody
+    public void showPlus2(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        int a = Integer.parseInt(req.getParameter("a"));
+        int b = Integer.parseInt(req.getParameter("b"));
+
+        resp.getWriter().append(a+b+"");
+    }
+
     @GetMapping("/minus")
     @ResponseBody
     public int showMinus(int a, int b){
@@ -81,8 +93,5 @@ public class MainController {
         return IntStream.rangeClosed(1, limit)
                 .mapToObj(i -> "%d * %d = %d".formatted(finalDan, i, finalDan*i))
                 .collect(Collectors.joining("<br>\n"));
-
-
     }
-
 }
